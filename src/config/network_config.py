@@ -1,0 +1,2 @@
+QUERY_CHANNEL = "mic"
+ANSWER_CHANNEL = "say"
