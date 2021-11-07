@@ -4,11 +4,11 @@ from abc import ABC
 
 import paho.mqtt.client as mqtt
 
-from src.config.network_config import QUERY_CHANNEL, ANSWER_CHANNEL
+from src.config.network_config import QUERY_CHANNEL, ANSWER_CHANNEL, DEFAULT_BROKER
 
 
 class VAModule(ABC):
-    def __init__(self, broadcast_channel=ANSWER_CHANNEL, listen_channel=QUERY_CHANNEL, broker="127.0.0.1",
+    def __init__(self, broadcast_channel=ANSWER_CHANNEL, listen_channel=QUERY_CHANNEL, broker=DEFAULT_BROKER,
                  client=mqtt.Client()):
         self.broadcast_channel = broadcast_channel
         self.listen_channel = listen_channel
@@ -33,7 +33,8 @@ class VAModule(ABC):
         print("Received:", query)
         answer = self.process_query(query)
         print("Answering", query, "with:", answer)
-        self.client.publish(self.broadcast_channel, answer)
+        if answer is not None:
+            self.client.publish(self.broadcast_channel, answer)
 
     @abc.abstractmethod
     def process_query(self, query: string) -> string:
@@ -41,6 +42,10 @@ class VAModule(ABC):
 
     @classmethod
     def main(cls):
-        module = cls()
+        import sys
+        broker = DEFAULT_BROKER
+        if len(sys.argv) >= 2:
+            broker = sys.argv[1]
+        module = cls(broker=broker)
         import time
         time.sleep(10000)  # TODO: better solution

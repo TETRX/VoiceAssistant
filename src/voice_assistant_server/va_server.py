@@ -1,10 +1,10 @@
 import paho.mqtt.client as mqtt
-from ..config.network_config import QUERY_CHANNEL, ANSWER_CHANNEL
-from tts import TTS
+from ..config.network_config import QUERY_CHANNEL, ANSWER_CHANNEL, DEFAULT_BROKER
+from .tts import TTS
 
 
 class VAServer:
-    def __init__(self, broadcast_channel=QUERY_CHANNEL, listen_channel=ANSWER_CHANNEL, broker="127.0.0.1",
+    def __init__(self, broadcast_channel=QUERY_CHANNEL, listen_channel=ANSWER_CHANNEL, broker=DEFAULT_BROKER,
                  client=mqtt.Client(), tts_client=TTS()):
         self.broadcast_channel = broadcast_channel
         self.listen_channel = listen_channel
