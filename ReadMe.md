@@ -14,11 +14,11 @@ To install all dependencies simply clone the repo and run:
 ## Running the server
 To run the server with localhost as broker run:
 
-```python3 -m src.voice_assistant_server.main```
+```python3 -m src.voice_assistant_server.main <flags>```
 
-To set a different broker run:
+### Available flags
+- ```--broker <broker IP>``` lets you set a custom IP for the MQTT broker (by default it's set to localhost)
 
-```python3 -m src.voice_assistant_server.main <broker IP>```
 
 ## Defining your module
 To define a module in this architecture, define a class that extends ```src.voice_assistant_modules.va_module``` 
@@ -42,14 +42,12 @@ call the va_module's ```main``` that will attempt to answer queries using your m
 
 To run the module, run:
 
-```python3 -m path.to.your_module```
+```python3 -m path.to.your_module <flags>```
 
-or:
-
-```python3 -m path.to.your_module <broker IP>```
-
-to define your own broker.
-
+### Available flags
+- ```--broker <broker IP>``` lets you set a custom IP for the MQTT broker (by default it's set to localhost)
+- ```--log <True or False>``` setting this to True enables logging the conversations in a json file available in 
+```<PROJECT_DIR>/logs```
 
 
 

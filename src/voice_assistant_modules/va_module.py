@@ -46,8 +46,13 @@ class VAModule(ABC):
         if answer is not None:
             self.client.publish(self.broadcast_channel, answer)
 
-    def get_name(self):
-        return type(self).__name__
+    @classmethod
+    def get_name(cls):
+        return cls.__name__
+
+    @classmethod
+    def class_description(cls):
+        return cls.__name__ + " a VA Module implementation."
 
     @abc.abstractmethod
     def process_query(self, query: string) -> string:
@@ -58,15 +63,18 @@ class VAModule(ABC):
 
     @classmethod
     def main(cls):
-        import sys
-        broker = DEFAULT_BROKER
-        if len(sys.argv) >= 2:
-            broker = sys.argv[1]
+        import argparse
+        parser = argparse.ArgumentParser(description=cls.class_description())
+        parser.add_argument('--broker', type=str, help='The IP to use as the MQTT broker', default=DEFAULT_BROKER)
+        parser.add_argument('--log', type=bool, help='Whether or not to log the conversations', default=False)
+        args = parser.parse_args()
+        broker = args.broker
         module = cls(broker=broker)
 
-        from ..logging.module_logger import ModuleLogger
-        module_logger = ModuleLogger(module)
-        module.observe(module_logger)
+        if args.log:
+            from ..logging.module_logger import ModuleLogger
+            module_logger = ModuleLogger(module)
+            module.observe(module_logger)
 
         import time
         time.sleep(10000)  # TODO: better solution
