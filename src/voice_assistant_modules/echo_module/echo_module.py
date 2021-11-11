@@ -1,10 +1,8 @@
-import string
-
 from src.voice_assistant_modules.va_module import VAModule
 
 
 class EchoModule(VAModule):
-    def process_query(self, query: string) -> string:
+    def process_query(self, query: str) -> str:
         return query
 
 

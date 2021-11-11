@@ -1,5 +1,4 @@
 import abc
-import string
 from abc import ABC
 
 import paho.mqtt.client as mqtt
@@ -12,7 +11,7 @@ from src.voice_assistant_modules.timer import Timer
 
 class VAModule(ABC):
     def __init__(self, broadcast_channel=ANSWER_CHANNEL, listen_channel=QUERY_CHANNEL, broker=DEFAULT_BROKER,
-                 client=mqtt.Client(), timer = Timer()):
+                 client=mqtt.Client(), timer=Timer()):
         self.broadcast_channel = broadcast_channel
         self.listen_channel = listen_channel
         self.broker = broker
@@ -52,14 +51,18 @@ class VAModule(ABC):
 
     @classmethod
     def class_description(cls):
-        return cls.__name__ + " a VA Module implementation."
+        return cls.get_name() + ", a VA Module implementation."
 
     @abc.abstractmethod
-    def process_query(self, query: string) -> string:
+    def process_query(self, query: str) -> str:
         pass
 
-    def observe(self, observer : ModuleObserver):
+    def observe(self, observer: ModuleObserver):
         self.observers.append(observer)
+
+    @classmethod
+    def add_arguments(cls, parser):
+        pass
 
     @classmethod
     def main(cls):
@@ -67,6 +70,7 @@ class VAModule(ABC):
         parser = argparse.ArgumentParser(description=cls.class_description())
         parser.add_argument('--broker', type=str, help='The IP to use as the MQTT broker', default=DEFAULT_BROKER)
         parser.add_argument('--log', type=bool, help='Whether or not to log the conversations', default=False)
+        cls.add_arguments(parser)  # so that the implementation can define it's own arguments
         args = parser.parse_args()
         broker = args.broker
         module = cls(broker=broker)
