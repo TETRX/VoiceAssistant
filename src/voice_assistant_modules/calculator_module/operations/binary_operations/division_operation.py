@@ -3,10 +3,11 @@ from src.voice_assistant_modules.calculator_module.operations.binary_operations.
 
 class DivisionOperation(BinaryOperation):
     KEYWORDS = (
-        "podziel",
+        "podzielone przez",
+        "podzielić przez",
         "podzielić",
+        "podziel",
         "przez",
-        "podzielić przez"
     )
 
     def calculate_two(self, arg1, arg2):

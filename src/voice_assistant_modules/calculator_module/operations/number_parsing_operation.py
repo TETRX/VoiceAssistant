@@ -6,7 +6,7 @@ class NoNumberToParseException(Exception):
 class NumberParsingOperation(Operation):
     @classmethod
     def get_keywords(cls):
-        return None
+        return []
 
     def calculate(self, *args):
         try:
