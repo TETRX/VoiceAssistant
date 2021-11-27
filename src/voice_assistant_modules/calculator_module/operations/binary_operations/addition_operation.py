@@ -5,7 +5,7 @@ class AdditionOperation(BinaryOperation):
     KEYWORDS = (
         "plus",
         "dodać",
-        "dodaj"
+        "dodaj",
     )
 
     def calculate_two(self, arg1, arg2):

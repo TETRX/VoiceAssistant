@@ -1,0 +1,91 @@
+[
+  {
+    "phrase": "3/4",
+    "expected_answer": 0.75
+  },
+  {
+    "phrase": "osiem",
+    "expected_answer": 8
+  },
+  {
+    "phrase": "pi\u0119\u0107",
+    "expected_answer": 5
+  },
+  {
+    "phrase": "2",
+    "expected_answer": 2
+  },
+  {
+    "phrase": "15",
+    "expected_answer": 15
+  },
+  {
+    "phrase": "834",
+    "expected_answer": 834
+  },
+  {
+    "phrase": "trzy pi\u0105te",
+    "expected_answer": 0.6
+  },
+  {
+    "phrase": "5234",
+    "expected_answer": 5234
+  },
+  {
+    "phrase": "5000",
+    "expected_answer": 5000
+  },
+  {
+    "phrase": "500 milion\u00f3w",
+    "expected_answer": 500000000
+  },
+  {
+    "phrase": "500 miliard\u00f3w",
+    "expected_answer": 500000000000
+  },
+  {
+    "phrase": "5 miliard\u00f3w",
+    "expected_answer": 5000000000
+  },
+  {
+    "phrase": "1200000",
+    "expected_answer": 1200000
+  },
+  {
+    "phrase": "5234445",
+    "expected_answer": 5234445
+  },
+  {
+    "phrase": "200",
+    "expected_answer": 200
+  },
+  {
+    "phrase": "pi\u0119ciu",
+    "expected_answer": 5
+  },
+  {
+    "phrase": "o\u015bmiu",
+    "expected_answer": 8
+  },
+  {
+    "phrase": "230",
+    "comment": "dwustu trzydziestu",
+    "expected_answer": 230
+  },
+  {
+    "phrase": "trzech setnych",
+    "expected_answer": 0.03
+  },
+  {
+    "phrase": "pi\u0119ciuset",
+    "expected_answer": 500
+  },
+  {
+    "phrase": "200 000",
+    "expected_answer": 200000
+  },
+  {
+    "phrase": "2E",
+    "expected_answer": 5.4365636569180904707205749427053249955144941873999191499339352554
+  }
+]

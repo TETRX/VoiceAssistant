@@ -1,0 +1,15 @@
+[
+  {
+    "phrase": "834 i 3/4",
+    "expected_answer": null
+  },
+
+  {
+    "phrase": "8 i 3/5",
+    "expected_answer": null
+  },
+  {
+    "phrase": "1000000 i 200 000",
+    "expected_answer": null
+  }
+]
