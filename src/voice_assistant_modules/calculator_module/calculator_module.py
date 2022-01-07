@@ -1,6 +1,8 @@
 from src.voice_assistant_modules.calculator_module.operation import Operation
 from src.voice_assistant_modules.calculator_module.operations.binary_operations.addition_operation import \
     AdditionOperation
+from src.voice_assistant_modules.calculator_module.operations.binary_operations.and_addition_operation import \
+    AndAdditionOperation
 from src.voice_assistant_modules.calculator_module.operations.binary_operations.division_operation import \
     DivisionOperation
 from src.voice_assistant_modules.calculator_module.operations.binary_operations.minus_binary_operation import Minus
@@ -9,6 +11,28 @@ from src.voice_assistant_modules.calculator_module.operations.binary_operations.
 from src.voice_assistant_modules.calculator_module.operations.binary_operations.subtraction_operation import \
     SubtractionOperation
 from src.voice_assistant_modules.calculator_module.operations.number_parsing_operation import NumberParsingOperation
+from src.voice_assistant_modules.calculator_module.operations.unary_operations.cyclometric_operations.arcus_cosine_operation import \
+    ArcusCosineOperation
+from src.voice_assistant_modules.calculator_module.operations.unary_operations.cyclometric_operations.arcus_cotangent_operation import \
+    ArcusCotangentOperation
+from src.voice_assistant_modules.calculator_module.operations.unary_operations.cyclometric_operations.arcus_sine_operation import \
+    ArcusSineOperation
+from src.voice_assistant_modules.calculator_module.operations.unary_operations.cyclometric_operations.arcus_tangent_operation import \
+    ArcusTangentOperation
+from src.voice_assistant_modules.calculator_module.operations.unary_operations.log_operations.binary_log_operation import \
+    BinaryLogOperation
+from src.voice_assistant_modules.calculator_module.operations.unary_operations.log_operations.decimal_log_operation import \
+    DecimalLogOperation
+from src.voice_assistant_modules.calculator_module.operations.unary_operations.log_operations.natural_log_operation import \
+    NaturalLogOperation
+from src.voice_assistant_modules.calculator_module.operations.unary_operations.trigonometric_operations.cosine_operation import \
+    CosineOperation
+from src.voice_assistant_modules.calculator_module.operations.unary_operations.trigonometric_operations.cotangent_operation import \
+    CotangentOperation
+from src.voice_assistant_modules.calculator_module.operations.unary_operations.trigonometric_operations.sine_operation import \
+    SineOperation
+from src.voice_assistant_modules.calculator_module.operations.unary_operations.trigonometric_operations.tangent_operation import \
+    TangentOperation
 from src.voice_assistant_modules.calculator_module.query import Query
 from src.voice_assistant_modules.va_module import VAModule
 
@@ -24,16 +48,35 @@ class CalculatorModule(VAModule):
         "przelicz"
     )
 
-    OPERATIONS_IN_ORDER_OF_EXECUTION = (
-        Minus.minus(SubtractionOperation),
-        SubtractionOperation,
-        Minus.minus(AdditionOperation),
-        AdditionOperation,
-        Minus.minus(MultiplicationOperation),
-        MultiplicationOperation,
-        Minus.minus(DivisionOperation),
-        DivisionOperation,
-        NumberParsingOperation
+    UNARY_OPERATIONS = (
+        ArcusCosineOperation,
+        ArcusCotangentOperation,
+        ArcusSineOperation,
+        ArcusTangentOperation,
+
+        BinaryLogOperation,
+        DecimalLogOperation,
+        NaturalLogOperation,
+
+        CosineOperation,
+        CotangentOperation,
+        SineOperation,
+        TangentOperation
+    )
+
+    OPERATIONS_IN_ORDER_OF_EXECUTION = (  # each inner tuple represents a priority -
+        # so if several operations are in the same tuple, they should be executed from left to right
+        (Minus.minus(SubtractionOperation),),
+        (SubtractionOperation,),
+        (Minus.minus(AdditionOperation),),
+        (AdditionOperation,),
+        (Minus.minus(MultiplicationOperation),),
+        (MultiplicationOperation,),
+        (Minus.minus(DivisionOperation),),
+        (DivisionOperation,),
+        UNARY_OPERATIONS,
+        (AndAdditionOperation,),
+        (NumberParsingOperation,)
     )
 
     OPERATIONS_IN_ORDER_OF_PARSING = (
@@ -46,6 +89,8 @@ class CalculatorModule(VAModule):
         AdditionOperation,
         SubtractionOperation,
     )
+    OPERATIONS_IN_ORDER_OF_PARSING += UNARY_OPERATIONS
+    OPERATIONS_IN_ORDER_OF_PARSING += AndAdditionOperation
 
     def __init__(self, operations_in_order_of_execution=OPERATIONS_IN_ORDER_OF_EXECUTION,
                  operations_in_order_of_parsing=OPERATIONS_IN_ORDER_OF_PARSING, *args, **kwargs):

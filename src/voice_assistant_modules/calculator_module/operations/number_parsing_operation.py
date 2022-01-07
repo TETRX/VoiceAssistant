@@ -143,5 +143,11 @@ class NumberParsingOperation(Operation):
             raise NoNumberToParseException
 
     def parse(self, text):
+        if text.replace(" ", "") == "":  # return None if string is effectively empty. We don't want to throw an
+            # exception because sometimes we will just never use this. This way it will only throw an exception if it
+            # is actually used.
+            return None
         multiplier, single_number = self._handle_units(text)
         return multiplier*self._parse_single_number(single_number)
+
+

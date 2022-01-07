@@ -2,7 +2,7 @@ import abc
 import portion as P
 import re
 
-class Operation:
+class Operation(abc.ABC):
     @classmethod
     @abc.abstractmethod
     def get_keywords(cls):

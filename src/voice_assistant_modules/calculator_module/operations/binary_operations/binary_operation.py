@@ -3,7 +3,7 @@ import abc
 from src.voice_assistant_modules.calculator_module.operation import Operation
 
 
-class BinaryOperation(Operation):
+class BinaryOperation(Operation, abc.ABC):
     @abc.abstractmethod
     def calculate_two(self, arg1, arg2):
         pass
