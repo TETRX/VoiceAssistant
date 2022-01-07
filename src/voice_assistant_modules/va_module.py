@@ -1,6 +1,8 @@
 import abc
 from abc import ABC
 
+import traceback
+
 import paho.mqtt.client as mqtt
 
 from src.config.network_config import QUERY_CHANNEL, ANSWER_CHANNEL, DEFAULT_BROKER
@@ -35,7 +37,11 @@ class VAModule(ABC):
     def on_message(self, client, userdata, message):
         time_received = self.timer.get_curr_time()
         query = str(message.payload.decode("utf-8"))
-        answer = self.process_query(query)
+        try:
+            answer = self.process_query(query)
+        except Exception as e:
+            traceback.print_exc()
+            return  # not a question we can answer
         time_answered = self.timer.get_curr_time()
 
         exchange = Exchange(query, answer, time_received=time_received, time_answered=time_answered)
