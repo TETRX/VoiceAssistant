@@ -38,6 +38,10 @@ from src.voice_assistant_modules.va_module import VAModule
 
 
 class CalculatorModule(VAModule):
+    @classmethod
+    def get_id(cls):
+        return "calc"
+
     CALCULATION_QUESTIONS = (
         "ile jest",
         "ile wynosi",
@@ -90,7 +94,7 @@ class CalculatorModule(VAModule):
         SubtractionOperation,
     )
     OPERATIONS_IN_ORDER_OF_PARSING += UNARY_OPERATIONS
-    OPERATIONS_IN_ORDER_OF_PARSING += AndAdditionOperation
+    OPERATIONS_IN_ORDER_OF_PARSING += (AndAdditionOperation,)
 
     def __init__(self, operations_in_order_of_execution=OPERATIONS_IN_ORDER_OF_EXECUTION,
                  operations_in_order_of_parsing=OPERATIONS_IN_ORDER_OF_PARSING, *args, **kwargs):

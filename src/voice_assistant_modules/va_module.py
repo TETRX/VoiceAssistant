@@ -12,21 +12,23 @@ from src.voice_assistant_modules.timer import Timer
 
 
 class VAModule(ABC):
-    def __init__(self, broadcast_channel=ANSWER_CHANNEL, listen_channel=QUERY_CHANNEL, broker=DEFAULT_BROKER,
-                 client=mqtt.Client(), timer=Timer()):
+    def __init__(self, broadcast_channel=ANSWER_CHANNEL, listen_channel=QUERY_CHANNEL, broker=DEFAULT_BROKER, timer=None):
         self.broadcast_channel = broadcast_channel
         self.listen_channel = listen_channel
         self.broker = broker
-        self.client = client
+        self.id = self.__class__.get_id()
+        self.client = mqtt.Client(self.id)
         self.init_client()
         self.observers = []
         self.timer = timer
+        if self.timer is None:
+            self.timer = Timer()
 
     def init_client(self):
         self.client.on_message = self.on_message
 
         def on_connect(client, userdata, flags, rc):
-            client.subscribe(self.listen_channel)
+            client.subscribe(self.listen_channel + "#")
 
         self.client.on_connect = on_connect
 
@@ -49,7 +51,7 @@ class VAModule(ABC):
             observer.notify(exchange)
 
         if answer is not None:
-            self.client.publish(self.broadcast_channel, answer)
+            self.client.publish(self.broadcast_channel + self.id, answer)
 
     @classmethod
     def get_name(cls):
@@ -61,6 +63,11 @@ class VAModule(ABC):
 
     @abc.abstractmethod
     def process_query(self, query: str) -> str:
+        pass
+
+    @classmethod
+    @abc.abstractmethod
+    def get_id(cls):
         pass
 
     def observe(self, observer: ModuleObserver):
