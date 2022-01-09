@@ -22,7 +22,8 @@ To run the server with localhost as broker run:
 
 ## Defining your module
 To define a module in this architecture, define a class that extends ```src.voice_assistant_modules.va_module``` 
-and override the ```process_query()``` function. 
+and override the ```process_query()``` function. Additionally, implement the ```get_id()``` classmethod to return a 
+short string that will identify your module.
 
 Your ```process_query()``` function should take in a string - the query the user asked our voice assistant, 
 and return a string. The string it returns is the message the user will receive as an answer.
