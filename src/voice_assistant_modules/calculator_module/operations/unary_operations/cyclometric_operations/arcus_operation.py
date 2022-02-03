@@ -8,5 +8,4 @@ class ArcusOperation(UnaryOperation):
         keywords = keywords + \
                tuple(word.replace("arcus", "arkusz") for word in keywords)  # speech_recognition likes hearing "arkusz"
         # instead of "arcus" in more complicated queries.
-        print(keywords)
         return keywords

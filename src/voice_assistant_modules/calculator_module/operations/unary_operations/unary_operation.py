@@ -12,7 +12,7 @@ class UnaryOperation(Operation, abc.ABC):
 
     def calculate(self, *args):
         return_value = args[-1]
-        for i in range(len(args)):
+        for i in range(len(args)-1):
             return_value = self.calculate_one(return_value)
         return return_value
 

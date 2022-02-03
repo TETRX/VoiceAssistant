@@ -7,7 +7,8 @@ class MultiplicationOperation(BinaryOperation):
         "pomnóż",
         "pomnóż przez",
         "pomnóż razy",
-        "zmultyplikuj razy"
+        "zmultyplikuj razy",
+        "x"
     )
 
     def calculate_two(self, arg1, arg2):

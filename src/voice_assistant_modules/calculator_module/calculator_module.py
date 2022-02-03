@@ -8,6 +8,7 @@ from src.voice_assistant_modules.calculator_module.operations.binary_operations.
 from src.voice_assistant_modules.calculator_module.operations.binary_operations.minus_binary_operation import Minus
 from src.voice_assistant_modules.calculator_module.operations.binary_operations.multiplication_operation import \
     MultiplicationOperation
+from src.voice_assistant_modules.calculator_module.operations.binary_operations.power_operation import PowerOperation
 from src.voice_assistant_modules.calculator_module.operations.binary_operations.subtraction_operation import \
     SubtractionOperation
 from src.voice_assistant_modules.calculator_module.operations.number_parsing_operation import NumberParsingOperation
@@ -78,16 +79,20 @@ class CalculatorModule(VAModule):
         (MultiplicationOperation,),
         (Minus.minus(DivisionOperation),),
         (DivisionOperation,),
+        (Minus.minus(PowerOperation),),
+        (PowerOperation,),
         UNARY_OPERATIONS,
         (AndAdditionOperation,),
         (NumberParsingOperation,)
     )
 
     OPERATIONS_IN_ORDER_OF_PARSING = (
+        Minus.minus(PowerOperation),
         Minus.minus(MultiplicationOperation),
         Minus.minus(DivisionOperation),
         Minus.minus(AdditionOperation),
         Minus.minus(SubtractionOperation),
+        PowerOperation,
         MultiplicationOperation,
         DivisionOperation,
         AdditionOperation,

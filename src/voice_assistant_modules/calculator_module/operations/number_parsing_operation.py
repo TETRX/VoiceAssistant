@@ -70,7 +70,7 @@ class NumberParsingOperation(Operation):
                     multiplier *= NumberParsingOperation.HARDCODED_UNITS[unit]
                     number_as_string = number_as_string[:-len(unit)]
                     last_iteration_failed = False
-
+            print(number_as_string)
             search_processed_fraction = re.search(NumberParsingOperation.FRACTION_PROCESSED_UNITS, number_as_string)
             if search_processed_fraction is not None:
                 processed_fraction = search_processed_fraction.group(0)
@@ -147,7 +147,9 @@ class NumberParsingOperation(Operation):
             # exception because sometimes we will just never use this. This way it will only throw an exception if it
             # is actually used.
             return None
-        multiplier, single_number = self._handle_units(text)
+        multiplier, single_number = self._handle_units(text.strip())
         return multiplier*self._parse_single_number(single_number)
 
 
+if __name__ == '__main__':
+    print(NumberParsingOperation().parse(" 2/3 "))
